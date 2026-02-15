@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - FreelanceHub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h2>FreelanceHub</h2>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="login.html?role=recruiter">Recruiter Login</a></li>
+                <li><a href="login.html?role=freelancer">Freelancer Login</a></li>
+                <li><a href="register.html" class="active">Register</a></li>
+                <li><a href="freelancer-profile.html">Profile</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Registration Section -->
+    <section class="auth-section">
+        <div class="container">
+            <div class="auth-card">
+                <h2 class="auth-title">Create Your Account</h2>
+                <p class="auth-subtitle">Join our platform today</p>
+
+                <!-- Role Selection Tabs -->
+                <div class="role-tabs">
+                    <button class="role-tab active" id="recruiterTab" onclick="switchRole('recruiter')">
+                        Recruiter
+                    </button>
+                    <button class="role-tab" id="freelancerTab" onclick="switchRole('freelancer')">
+                        Freelancer
+                    </button>
+                </div>
+
+                <!-- Recruiter Registration Form -->
+                <form id="recruiterForm" class="auth-form">
+                    <div class="form-group">
+                        <label for="recruiterName">Full Name</label>
+                        <input type="text" id="recruiterName" name="fullName" placeholder="Enter your full name"
+                            required>
+                        <span class="error-message" id="recruiterNameError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="recruiterEmail">Email Address</label>
+                        <input type="email" id="recruiterEmail" name="email" placeholder="Enter your email" required>
+                        <span class="error-message" id="recruiterEmailError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="recruiterPassword">Password</label>
+                        <input type="password" id="recruiterPassword" name="password"
+                            placeholder="Create a password (min 8 characters)" required>
+                        <span class="error-message" id="recruiterPasswordError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="recruiterCompany">Company Name</label>
+                        <input type="text" id="recruiterCompany" name="companyName"
+                            placeholder="Enter your company name" required>
+                        <span class="error-message" id="recruiterCompanyError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="recruiterPhone">Phone Number</label>
+                        <input type="tel" id="recruiterPhone" name="phone" placeholder="Enter your phone number"
+                            required>
+                        <span class="error-message" id="recruiterPhoneError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-full">Register as Recruiter</button>
+                    </div>
+
+                    <div class="form-message" id="recruiterMessage"></div>
+                </form>
+
+                <!-- Freelancer Registration Form -->
+                <form id="freelancerForm" class="auth-form" style="display: none;">
+                    <div class="form-group">
+                        <label for="freelancerName">Full Name</label>
+                        <input type="text" id="freelancerName" name="fullName" placeholder="Enter your full name"
+                            required>
+                        <span class="error-message" id="freelancerNameError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="freelancerEmail">Email Address</label>
+                        <input type="email" id="freelancerEmail" name="email" placeholder="Enter your email" required>
+                        <span class="error-message" id="freelancerEmailError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="freelancerPassword">Password</label>
+                        <input type="password" id="freelancerPassword" name="password"
+                            placeholder="Create a password (min 8 characters)" required>
+                        <span class="error-message" id="freelancerPasswordError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="freelancerPhone">Phone Number</label>
+                        <input type="tel" id="freelancerPhone" name="phone" placeholder="Enter your phone number"
+                            required>
+                        <span class="error-message" id="freelancerPhoneError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="freelancerSkills">Skills</label>
+                        <input type="text" id="freelancerSkills" name="skills"
+                            placeholder="e.g., Web Development, Graphic Design" required>
+                        <span class="error-message" id="freelancerSkillsError"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-full">Register as Freelancer</button>
+                    </div>
+
+                    <div class="form-message" id="freelancerMessage"></div>
+                </form>
+
+                <div class="auth-footer">
+                    <p>Already have an account? <a href="login.html">Login here</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 FreelanceHub - Digital Platform for Freelancer Discovery and Hiring. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="api.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

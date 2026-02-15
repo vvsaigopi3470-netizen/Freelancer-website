@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelancer Profile - FreelanceHub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h2>FreelanceHub</h2>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="login.html?role=recruiter">Recruiter Login</a></li>
+                <li><a href="login.html?role=freelancer">Freelancer Login</a></li>
+                <li><a href="register.html">Register</a></li>
+                <li><a href="freelancer-profile.html" class="active">Profile</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Section -->
+    <section class="profile-section">
+        <div class="container">
+            <h2 class="section-title">Create Your Freelancer Profile</h2>
+
+            <div class="profile-container">
+                <!-- Profile Form -->
+                <div class="profile-form-card">
+                    <form id="profileForm" class="profile-form">
+                        <div class="form-group">
+                            <label for="profileName">Full Name</label>
+                            <input type="text" id="profileName" name="fullName" placeholder="Enter your full name"
+                                required>
+                            <span class="error-message" id="profileNameError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="profilePicture">Profile Picture</label>
+                            <input type="file" id="profilePicture" name="profilePicture" accept="image/*">
+                            <div id="imagePreview" class="image-preview"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="profileEducation">Education</label>
+                            <input type="text" id="profileEducation" name="education"
+                                placeholder="e.g., Bachelor's in Computer Science" required>
+                            <span class="error-message" id="profileEducationError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="profileExperience">Experience (Years)</label>
+                            <input type="number" id="profileExperience" name="experience"
+                                placeholder="Years of experience" min="0" max="50" required>
+                            <span class="error-message" id="profileExperienceError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="profileSkills">Technical Skills</label>
+                            <input type="text" id="profileSkills" name="skills"
+                                placeholder="e.g., JavaScript, Python, React" required>
+                            <span class="error-message" id="profileSkillsError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="profileTechStack">Tech Stack</label>
+                            <input type="text" id="profileTechStack" name="techStack"
+                                placeholder="e.g., MERN, Django, Flutter" required>
+                            <span class="error-message" id="profileTechStackError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="profileCertifications">Certifications</label>
+                            <textarea id="profileCertifications" name="certifications" rows="3"
+                                placeholder="List your certifications (one per line)"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="profilePortfolio">Portfolio Link</label>
+                            <input type="url" id="profilePortfolio" name="portfolio"
+                                placeholder="https://yourportfolio.com">
+                            <span class="error-message" id="profilePortfolioError"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="profileAbout">About Me</label>
+                            <textarea id="profileAbout" name="about" rows="5"
+                                placeholder="Tell us about yourself, your expertise, and what makes you unique..."
+                                required></textarea>
+                            <span class="error-message" id="profileAboutError"></span>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">Save Profile</button>
+                            <button type="button" class="btn btn-secondary" onclick="previewProfile()">Preview
+                                Profile</button>
+                            <button type="button" class="btn btn-outline" onclick="clearProfile()">Clear Form</button>
+                        </div>
+
+                        <div class="form-message" id="profileMessage"></div>
+                    </form>
+                </div>
+
+                <!-- Profile Preview -->
+                <div class="profile-preview-card" id="profilePreview" style="display: none;">
+                    <h3>Profile Preview</h3>
+                    <div class="preview-content">
+                        <div class="preview-header">
+                            <div id="previewImage" class="preview-image">
+                                <span class="preview-avatar">👤</span>
+                            </div>
+                            <div class="preview-info">
+                                <h2 id="previewName">Your Name</h2>
+                                <p id="previewEducation">Education</p>
+                            </div>
+                        </div>
+
+                        <div class="preview-section">
+                            <h4>Experience</h4>
+                            <p id="previewExperience">0 years</p>
+                        </div>
+
+                        <div class="preview-section">
+                            <h4>Technical Skills</h4>
+                            <div id="previewSkills" class="skills-tags"></div>
+                        </div>
+
+                        <div class="preview-section">
+                            <h4>Tech Stack</h4>
+                            <div id="previewTechStack" class="skills-tags"></div>
+                        </div>
+
+                        <div class="preview-section">
+                            <h4>Certifications</h4>
+                            <p id="previewCertifications">None</p>
+                        </div>
+
+                        <div class="preview-section">
+                            <h4>Portfolio</h4>
+                            <p id="previewPortfolio">Not provided</p>
+                        </div>
+
+                        <div class="preview-section">
+                            <h4>About Me</h4>
+                            <p id="previewAbout">No description provided</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 FreelanceHub - Digital Platform for Freelancer Discovery and Hiring. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="api.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
