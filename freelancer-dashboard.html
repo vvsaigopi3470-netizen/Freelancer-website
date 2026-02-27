@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Freelancer Dashboard - FreelanceHub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h2 onclick="window.location.href='index.html'">FreelanceHub</h2>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="freelancer-dashboard.html" class="active">Dashboard</a></li>
+                <li><a href="freelancer-profile.html">My Profile</a></li>
+                <li><a href="#" onclick="logout()">Logout</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Header -->
+    <header class="hero"
+        style="min-height: 300px; padding: var(--spacing-xl) 0; background: var(--gradient-secondary);">
+        <div class="container">
+            <div class="hero-content" style="text-align: left;">
+                <h1 class="hero-title">Freelancer Dashboard</h1>
+                <p class="hero-subtitle">Manage your work, track earnings, and find new opportunities.</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Dashboard Content -->
+    <section class="features">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">💼</div>
+                    <h3>Available Gigs</h3>
+                    <p>Browse and apply for the latest job postings from top recruiters.</p>
+                    <button class="btn btn-outline" style="margin-top: var(--spacing-sm);">Browse Gigs</button>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h3>My Earnings</h3>
+                    <p>Track your payments and manage your financial overview.</p>
+                    <button class="btn btn-outline" style="margin-top: var(--spacing-sm);">View Details</button>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📁</div>
+                    <h3>Active Projects</h3>
+                    <p>Keep track of your ongoing work and deadlines.</p>
+                    <button class="btn btn-outline" style="margin-top: var(--spacing-sm);">Manage Projects</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dynamic Content Section -->
+    <section id="dynamic-content" class="container" style="display: none; padding-bottom: var(--spacing-xl);">
+        <div id="content-area" class="feature-card" style="width: 100%; text-align: left;">
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-md);">
+                <h2 id="content-title">Content Title</h2>
+                <button class="btn btn-secondary" onclick="hideDynamicContent()">Close</button>
+            </div>
+            <div id="content-body">
+                <!-- Data will be injected here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 FreelanceHub - Digital Platform for Freelancer Discovery and Hiring. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="api.js"></script>
+    <script src="script.js"></script>
+    <script>
+        const dummyGigs = [
+            { id: 1, title: "Frontend Developer Needed", company: "TechFlow", budget: "$500", tags: ["React", "CSS"] },
+            { id: 2, title: "Graphic Designer for Logo", company: "Creative Minds", budget: "$200", tags: ["Illustrator", "Branding"] },
+            { id: 3, title: "Python Script for Scraping", company: "DataSync", budget: "$150", tags: ["Python", "BS4"] }
+        ];
+
+        const dummyProjects = [
+            { id: 101, title: "E-commerce UI Redesign", status: "In Progress", deadline: "March 15, 2026" },
+            { id: 102, title: "Mobile App Wireframes", status: "Completed", deadline: "Feb 20, 2026" }
+        ];
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const user = api.getUser();
+            if (user && user.full_name) {
+                document.querySelector('.hero-title').textContent = `Welcome, ${user.full_name}`;
+            }
+
+            // Bind buttons
+            const buttons = document.querySelectorAll('.feature-card .btn');
+            if (buttons.length >= 3) {
+                buttons[0].onclick = showGigs;
+                buttons[1].onclick = showEarnings;
+                buttons[2].onclick = showProjects;
+            }
+        });
+
+        function hideDynamicContent() {
+            document.getElementById('dynamic-content').style.display = 'none';
+        }
+
+        function showGigs() {
+            const container = document.getElementById('dynamic-content');
+            const title = document.getElementById('content-title');
+            const body = document.getElementById('content-body');
+
+            title.textContent = "Available Gigs";
+            body.innerHTML = dummyGigs.map(gig => `
+                <div style="padding: 15px; border-bottom: 1px solid #eee; margin-bottom: 10px;">
+                    <h4 style="color: var(--primary-color);">${gig.title}</h4>
+                    <p><strong>${gig.company}</strong> | Budget: ${gig.budget}</p>
+                    <div style="margin-top: 5px;">
+                        ${gig.tags.map(t => `<span class="skill-tag" style="font-size: 10px; padding: 2px 8px;">${t}</span>`).join(' ')}
+                    </div>
+                </div>
+            `).join('');
+
+            container.style.display = 'block';
+            container.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showEarnings() {
+            const container = document.getElementById('dynamic-content');
+            const title = document.getElementById('content-title');
+            const body = document.getElementById('content-body');
+
+            title.textContent = "My Earnings";
+            body.innerHTML = `
+                <div style="text-align: center; padding: 20px;">
+                    <h2 style="font-size: 48px; color: #10b981;">$1,250.00</h2>
+                    <p>Total Balance</p>
+                    <hr style="margin: 20px 0; border: none; border-top: 1px solid #eee;">
+                    <div style="display: flex; justify-content: space-around;">
+                        <div><h4>$800</h4><p>Pending</p></div>
+                        <div><h4>$450</h4><p>Withdrawn</p></div>
+                    </div>
+                </div>
+            `;
+
+            container.style.display = 'block';
+            container.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showProjects() {
+            const container = document.getElementById('dynamic-content');
+            const title = document.getElementById('content-title');
+            const body = document.getElementById('content-body');
+
+            title.textContent = "Active Projects";
+            body.innerHTML = dummyProjects.map(proj => `
+                <div style="padding: 15px; background: #f9fafb; border-radius: 8px; margin-bottom: 10px;">
+                    <h4>${proj.title}</h4>
+                    <p>Status: <span style="color: ${proj.status === 'Completed' ? '#10b981' : '#f59e0b'}">${proj.status}</span></p>
+                    <p>Deadline: ${proj.deadline}</p>
+                </div>
+            `).join('');
+
+            container.style.display = 'block';
+            container.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+
+</html>

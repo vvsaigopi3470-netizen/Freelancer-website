@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recruiter Dashboard - FreelanceHub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <h2 onclick="window.location.href='index.html'">FreelanceHub</h2>
+            </div>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="recruiter-dashboard.html" class="active">Dashboard</a></li>
+                <li><a href="#" onclick="logout()">Logout</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Dashboard Header -->
+    <header class="hero" style="min-height: 300px; padding: var(--spacing-xl) 0;">
+        <div class="container">
+            <div class="hero-content" style="text-align: left;">
+                <h1 class="hero-title">Recruiter Dashboard</h1>
+                <p class="hero-subtitle">Manage your job postings and find the best talent.</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Dashboard Content -->
+    <section class="features">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">📝</div>
+                    <h3>Post a Job</h3>
+                    <p>Create new job listings to attract top freelancers.</p>
+                    <button class="btn btn-outline" style="margin-top: var(--spacing-sm);">Post Now</button>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Find Talent</h3>
+                    <p>Search through our curated list of professional freelancers.</p>
+                    <button class="btn btn-outline" style="margin-top: var(--spacing-sm);">Search</button>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>My Postings</h3>
+                    <p>Track and manage your active job advertisements.</p>
+                    <button class="btn btn-outline" style="margin-top: var(--spacing-sm);">View All</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 FreelanceHub - Digital Platform for Freelancer Discovery and Hiring. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Dynamic Content Section -->
+    <section id="dynamic-content" class="container" style="display: none; padding-bottom: var(--spacing-xl);">
+        <div id="content-area" class="feature-card" style="width: 100%; text-align: left;">
+            <div
+                style="display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--spacing-md);">
+                <h2 id="content-title">Content Title</h2>
+                <button class="btn btn-secondary" onclick="hideDynamicContent()">Close</button>
+            </div>
+            <div id="content-body">
+                <!-- Data will be injected here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 FreelanceHub - Digital Platform for Freelancer Discovery and Hiring. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="api.js"></script>
+    <script src="script.js"></script>
+    <script>
+        const dummyFreelancers = [
+            { id: 1, name: "Alice Smith", role: "Full Stack Developer", skills: ["React", "Node.js", "AWS"], rate: "$50/hr" },
+            { id: 2, name: "Bob Jones", role: "UI/UX Designer", skills: ["Figma", "Sketch", "Adobe XD"], rate: "$45/hr" },
+            { id: 3, name: "Charlie Davis", role: "Backend Engineer", skills: ["Python", "Django", "PostgreSQL"], rate: "$55/hr" }
+        ];
+
+        const dummyPostings = [
+            { id: 1, title: "React Expert for Dashboard", date: "Feb 20, 2026", applications: 12 },
+            { id: 2, title: "Python/Django Backend Developer", date: "Feb 22, 2026", applications: 8 }
+        ];
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const user = api.getUser();
+            if (user && user.full_name) {
+                document.querySelector('.hero-title').textContent = `Welcome, ${user.full_name}`;
+            }
+
+            // Bind buttons
+            const buttons = document.querySelectorAll('.feature-card .btn');
+            if (buttons.length >= 3) {
+                buttons[0].onclick = showPostForm;
+                buttons[1].onclick = showTalent;
+                buttons[2].onclick = showPostings;
+            }
+        });
+
+        function hideDynamicContent() {
+            document.getElementById('dynamic-content').style.display = 'none';
+        }
+
+        function showPostForm() {
+            const container = document.getElementById('dynamic-content');
+            const title = document.getElementById('content-title');
+            const body = document.getElementById('content-body');
+
+            title.textContent = "Post a New Job";
+            body.innerHTML = `
+                <form onsubmit="event.preventDefault(); alert('Job Posted Successfully!'); hideDynamicContent();" style="display: flex; flex-direction: column; gap: 15px;">
+                    <div class="form-group">
+                        <label>Job Title</label>
+                        <input type="text" placeholder="e.g. Senior React Developer" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Budget</label>
+                        <input type="text" placeholder="e.g. $500 - $1000" required style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+                    </div>
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea placeholder="Describe the job requirements..." rows="4" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 4px;"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Job Posting</button>
+                </form>
+            `;
+
+            container.style.display = 'block';
+            container.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showTalent() {
+            const container = document.getElementById('dynamic-content');
+            const title = document.getElementById('content-title');
+            const body = document.getElementById('content-body');
+
+            title.textContent = "Top Talent";
+            body.innerHTML = dummyFreelancers.map(f => `
+                <div style="padding: 15px; border-bottom: 1px solid #eee; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h4 style="color: var(--primary-color);">${f.name}</h4>
+                        <p><strong>${f.role}</strong> | Rate: ${f.rate}</p>
+                        <div style="margin-top: 5px;">
+                            ${f.skills.map(s => `<span class="skill-tag" style="font-size: 10px; padding: 2px 8px;">${s}</span>`).join(' ')}
+                        </div>
+                    </div>
+                    <button class="btn btn-outline" style="padding: 5px 10px;">Invite</button>
+                </div>
+            `).join('');
+
+            container.style.display = 'block';
+            container.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function showPostings() {
+            const container = document.getElementById('dynamic-content');
+            const title = document.getElementById('content-title');
+            const body = document.getElementById('content-body');
+
+            title.textContent = "Your Job Postings";
+            body.innerHTML = dummyPostings.map(post => `
+                <div style="padding: 15px; background: #f9fafb; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <h4>${post.title}</h4>
+                        <p>Posted on: ${post.date}</p>
+                        <p>Applications: <span style="font-weight: bold; color: var(--primary-color);">${post.applications}</span></p>
+                    </div>
+                    <button class="btn btn-outline" style="padding: 5px 10px;">Edit</button>
+                </div>
+            `).join('');
+
+            container.style.display = 'block';
+            container.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+
+</html>
